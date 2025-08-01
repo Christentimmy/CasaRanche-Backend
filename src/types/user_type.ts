@@ -63,6 +63,7 @@ interface IStats {
 interface IAccountStatus {
   isActive: boolean;
   isEmailVerified: boolean;
+  isProfileCompleted: boolean;
   isBanned: boolean;
   banReason: string | null;
   lastActive: Date;
@@ -116,6 +117,8 @@ export interface IUser extends Document {
   avatarUrl: string;
   coverPhotoUrl: string;
   dateOfBirth?: Date;
+  education?: string;
+  work?: string;
   isVerified: boolean;
   verification: IVerification;
   preferences: IPreferences;

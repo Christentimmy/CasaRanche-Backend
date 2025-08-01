@@ -1,13 +1,12 @@
-
-
 import express from "express";
 import dotenv from "dotenv";
 import { connectToDatabase } from "./config/database";
-import authRoutes from "./routes/auth_routes";
 import morgan from "morgan";
-import http from 'http';
+import http from "http";
 import { setupSocket } from "./config/socket";
 
+import authRoutes from "./routes/auth_routes";
+import userRoutes from "./routes/user_routes";
 
 dotenv.config();
 const app = express();
@@ -20,6 +19,7 @@ app.use(morgan("dev"));
 connectToDatabase();
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 const server = http.createServer(app);
 setupSocket(server);

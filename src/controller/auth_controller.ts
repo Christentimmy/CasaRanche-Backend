@@ -5,10 +5,14 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import validator from "validator";
 import { redisController } from "../controller/redis_controller";
 import { sendOTP } from "../services/email_service";
+import tokenBlacklistSchema from "../models/token_blacklist_model";
 
 import dotenv from "dotenv";
 dotenv.config();
 
+if (!process.env.TOKEN_SECRET) {
+  throw new Error("TOKEN_SECRET is not defined in environment variables");
+}
 const token_secret = process.env.TOKEN_SECRET;
 
 export const authController = {
@@ -76,6 +80,7 @@ export const authController = {
         { expiresIn: "2d" }
       );
       await newUser.save();
+      await tokenBlacklistSchema.create({ token, userId: newUser._id });
 
       const otp = Math.floor(1000 + Math.random() * 9000).toString();
       await redisController.saveOtpToStore(email, otp);
@@ -88,6 +93,69 @@ export const authController = {
     } catch (error) {
       console.error(`SignUpUserController: ${error}`);
       res.status(500).json({ message: "Server error" });
+    }
+  },
+
+  loginUser: async (req: Request, res: Response): Promise<void> => {
+    try {
+      if (!req.body || typeof req.body !== "object") {
+        res.status(400).json({ message: "Missing request body" });
+        return;
+      }
+
+      const { email, password } = req.body;
+
+      if (!email || !password) {
+        res.status(400).json({ message: "Email and password are required" });
+        return;
+      }
+
+      const user = await userSchema.findOne({ email }).select("password accountStatus");
+
+      if (!user) {
+        res.status(404).json({ message: "Invalid Credentials" });
+        return;
+      }
+
+      if (!user.password) {
+        res.status(404).json({ message: "Invalid Credentials" });
+        return;
+      }
+
+      // Validate password
+      const validatePassword = await bcryptjs.compare(password, user.password);
+      if (!validatePassword) {
+        res.status(404).json({ message: "Invalid Credentials" });
+        return;
+      }
+
+      // Check if user is banned
+      if (user.accountStatus.isBanned) {
+        res.status(403).json({ message: "Account banned" });
+        return;
+      }
+
+      // Generate token
+      const token = jwt.sign({ id: user._id, role: user.role }, token_secret, {
+        expiresIn: "2d",
+      });
+
+      // Handle verification
+      if (!user.accountStatus.isEmailVerified) {
+        res.status(401).json({ message: "User Not Verified", token: token });
+        return;
+      }
+
+      // Check if user profile is completed
+      if (!user.accountStatus.isProfileCompleted) {
+        res.status(400).json({ message: "User Not Complete", token: token });
+        return;
+      }
+
+      res.status(200).json({ message: "Login Successful", token: token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal Server Error" });
     }
   },
 
