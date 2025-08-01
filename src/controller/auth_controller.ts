@@ -59,12 +59,11 @@ export const authController = {
 
       const salt = await bcryptjs.genSalt(12);
       const hashedPassword = await bcryptjs.hash(password, salt);
-      let anonymousId = `ghost_${Math.random().toString(36).substr(2, 15)}`;
 
-      const user = await userSchema.findOne({ anonymousId });
-      if (user) {
+      let anonymousId;
+      do {
         anonymousId = `ghost_${Math.random().toString(36).substr(2, 15)}`;
-      }
+      } while (await userSchema.findOne({ anonymousId }));
 
       const newUser = new userSchema({
         email: email,
@@ -110,7 +109,9 @@ export const authController = {
         return;
       }
 
-      const user = await userSchema.findOne({ email }).select("password accountStatus");
+      const user = await userSchema
+        .findOne({ email })
+        .select("password accountStatus");
 
       if (!user) {
         res.status(404).json({ message: "Invalid Credentials" });
@@ -158,6 +159,31 @@ export const authController = {
       res.status(500).json({ message: "Internal Server Error" });
     }
   },
+
+  logoutUser: async (req: Request, res: Response) => {
+    try {
+      const token = req.headers.authorization?.split(" ")[1];
+      if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+      }
+
+      const decoded = jwt.verify(token, token_secret!) as JwtPayload;
+
+      // Optional: ensure token belongs to a valid user
+      const user = await userSchema.findById(decoded.id);
+      if (!user) {
+        return res.status(401).json({ message: "Invalid token" });
+      }
+
+      // Add token to blacklist (if not using short token lifespans)
+      await tokenBlacklistSchema.create({ token, userId: user._id });
+
+      res.status(200).json({ message: "Logout successful" });
+    } catch (error) {
+      console.error("❌ Error in logout:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  },  
 
   sendOtp: async (req: Request, res: Response) => {
     try {
