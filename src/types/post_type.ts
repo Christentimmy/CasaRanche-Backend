@@ -46,7 +46,7 @@ export interface IPoll {
 // Ghost Mode and Verification
 export interface IGhostModeSettings {
   isGhostPost: boolean;
-  ghostNumber?: string; // Anonymous identifier for ghost posts
+  anonymousId: string; // Anonymous identifier for ghost posts
   showVerificationBadge: boolean; // User can toggle verification display
   allowedVerificationTypes: Array<"account" | "school" | "work">; // Which verifications to show
 }

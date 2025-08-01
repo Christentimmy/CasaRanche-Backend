@@ -130,7 +130,7 @@ const GhostModeSettingsSchema = new Schema<IGhostModeSettings>(
       type: Boolean,
       default: false,
     },
-    ghostNumber: String,
+    anonymousId: String,
     showVerificationBadge: {
       type: Boolean,
       default: true,
@@ -557,11 +557,11 @@ PostSchema.virtual("comments", {
 // Pre-save middleware
 PostSchema.pre("save", function (next) {
   // Generate ghost number if it's a ghost post and doesn't have one
-  if (this.ghostMode.isGhostPost && !this.ghostMode.ghostNumber) {
-    this.ghostMode.ghostNumber = `ghost_${Math.random()
-      .toString(36)
-      .substr(2, 9)}`;
-  }
+  // if (this.ghostMode.isGhostPost && !this.ghostMode.ghostNumber) {
+  //   this.ghostMode.ghostNumber = `ghost_${Math.random()
+  //     .toString(36)
+  //     .substr(2, 9)}`;
+  // }
 
   // Set published date for new posts
   if (this.isNew && !this.isDraft && !this.publishedAt) {

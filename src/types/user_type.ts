@@ -1,17 +1,15 @@
-
-
-import { Document, Types } from 'mongoose';
+import { Document, Types } from "mongoose";
 
 // Define the interfaces for nested objects first
 interface IVerificationInstitution {
   name: string;
   email: string;
   position?: string; // Optional for work verification
-  status: 'pending' | 'approved' | 'rejected';
+  status: "pending" | "approved" | "rejected";
 }
 
 interface IVerification {
-  type: 'school' | 'work' | null;
+  type: "school" | "work" | null;
   documentUrl: string | null;
   approved: boolean;
   verifiedAt: Date | null;
@@ -35,14 +33,14 @@ interface IPushNotificationSettings {
 
 interface IPrivacySettings {
   showOnlineStatus: boolean;
-  allowMessagesFrom: 'everyone' | 'followed' | 'nobody';
+  allowMessagesFrom: "everyone" | "followed" | "nobody";
   showLastSeen: boolean;
   showActivityStatus: boolean;
 }
 
 interface IPreferences {
-  ghostLevel: 'A' | 'B' | 'C' | 'D';
-  theme: 'light' | 'dark' | 'system';
+  ghostLevel: "A" | "B" | "C" | "D";
+  theme: "light" | "dark" | "system";
   showVerificationInGhost: boolean;
   notificationSettings: {
     email: IEmailNotificationSettings;
@@ -64,6 +62,7 @@ interface IStats {
 
 interface IAccountStatus {
   isActive: boolean;
+  isEmailVerified: boolean;
   isBanned: boolean;
   banReason: string | null;
   lastActive: Date;
@@ -74,12 +73,13 @@ interface IAccountStatus {
 interface ISocialLink {
   platform: string;
   url: string;
-  visibility: 'public' | 'followers' | 'private';
+  visibility: "public" | "followers" | "private";
 }
 
 interface IGhostProgression {
-  level: 'A' | 'B' | 'C' | 'D';
+  level: "A" | "B" | "C" | "D";
   postsMade: number;
+  
   friendsInvited: number;
   daysActive: number;
   lastLevelUp: Date;
@@ -91,7 +91,7 @@ interface IGhostProgression {
 }
 
 interface IAiEngagementPreferences {
-  frequency: 'low' | 'medium' | 'high';
+  frequency: "low" | "medium" | "high";
   topics: string[];
   timesOfDay: Array<{
     hour: number;
@@ -107,7 +107,7 @@ interface IAiEngagement {
 
 // Main User Document Interface
 export interface IUser extends Document {
-  email?: string; // Mongoose `sparse` and `unique` indexes mean this can be null/undefined
+  email?: string; 
   password?: string;
   anonymousId: string;
   username?: string;
@@ -126,7 +126,8 @@ export interface IUser extends Document {
   ghostProgression: IGhostProgression;
   aiEngagement: IAiEngagement;
   metadata: Map<string, any>; // Mongoose.Schema.Types.Mixed becomes 'any' in TypeScript
-
+  role: "user" | "admin";
+  
   // Mongoose adds these properties
   createdAt: Date;
   updatedAt: Date;

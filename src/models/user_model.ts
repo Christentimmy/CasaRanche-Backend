@@ -139,6 +139,7 @@ const userSchema = new Schema<IUser>(
     },
     accountStatus: {
       isActive: { type: Boolean, default: true },
+      isEmailVerified: { type: Boolean, default: false },
       isBanned: { type: Boolean, default: false },
       banReason: { type: String, default: null },
       lastActive: { type: Date, default: Date.now },
@@ -189,7 +190,8 @@ const userSchema = new Schema<IUser>(
       type: Map,
       of: Schema.Types.Mixed,
       default: {}
-    }
+    },
+    role: { type: String, enum: ["user", "admin"], default: "user" },
   },
   { 
     timestamps: true,
@@ -199,7 +201,7 @@ const userSchema = new Schema<IUser>(
 );
 
 // Indexes for better query performance
-userSchema.index({ email: 1 }, { unique: true, sparse: true });
+// userSchema.index({ email: 1 }, { unique: true, sparse: true });
 userSchema.index({ username: 1 }, { unique: true, sparse: true });
 userSchema.index({ 'verification.status': 1 });
 userSchema.index({ 'accountStatus.lastActive': -1 });
