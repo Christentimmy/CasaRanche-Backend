@@ -1,5 +1,8 @@
 import { Schema, model, Types } from "mongoose";
 import { IUser } from "../types/user_type";
+import { levelCapabilities } from "../types/post_type";
+import { PostCapabilities } from "../types/post_type";
+
 
 const userSchema = new Schema<IUser>(
   {
@@ -159,6 +162,7 @@ const userSchema = new Schema<IUser>(
     ghostProgression: {
       level: { type: String, enum: ["A", "B", "C", "D"], default: "A" },
       postsMade: { type: Number, default: 0 },
+      daysActive: { type: Number, default: 0 },
       friendsInvited: { type: Number, default: 0 },
       lastLevelUp: { type: Date, default: Date.now },
       nextLevelRequirements: {
@@ -202,10 +206,57 @@ userSchema.index({ 'accountStatus.lastActive': -1 });
 userSchema.index({ 'ghostProgression.level': 1 });
 
 
-// Method to check if user can post at a certain ghost level
-userSchema.methods.canPostAtGhostLevel = function(this:IUser,level: 'A' | 'B' | 'C' | 'D'): boolean {
-  const levelOrder = { 'A': 1, 'B': 2, 'C': 3, 'D': 4 };
-  return levelOrder[this.ghostProgression.level] >= levelOrder[level];
+// This can be a static map or a function that returns the requirements
+const levelRequirements = {
+  'B': { posts: 90, friends: 60, daysActive: 7 },
+  'C': { posts: 440, friends: 150, daysActive: null },
+  'D': { posts: 2300, friends: 550, daysActive: null },
 };
 
-export default model("User", userSchema);
+
+userSchema.methods.checkAndUpgradeGhostLevel = async function(this: IUser) {
+  const currentLevel = this.ghostProgression.level;
+  
+  if (currentLevel === 'D') {
+    // User is already at the highest level, no upgrade needed.
+    return;
+  }
+  
+  const nextLevel = getNextLevel(currentLevel);
+  if(nextLevel==null)return;
+  const requirements = levelRequirements[nextLevel];
+  
+  const meetsPostsReq = this.ghostProgression.postsMade >= requirements.posts;
+  const meetsFriendsReq = this.ghostProgression.friendsInvited >= requirements.friends;
+  const meetsDaysActiveReq = requirements.daysActive === null || this.ghostProgression.daysActive >= requirements.daysActive;
+  
+  if ((meetsPostsReq || meetsFriendsReq) && meetsDaysActiveReq) {
+    // User has met the requirements, upgrade their level
+    this.ghostProgression.level = nextLevel;
+    this.ghostProgression.lastLevelUp = new Date();
+    // You might want to reset the progress for the new level's requirements if you track that
+    // For example: this.ghostProgression.postsMade = 0;
+    await this.save();
+    console.log(`User ${this.username} has been upgraded to level ${nextLevel}.`);
+  }
+};
+  
+// Helper function to get the next level
+function getNextLevel(current: 'A' | 'B' | 'C' | 'D'): 'B' | 'C' | 'D' | null {
+    switch (current) {
+    case 'A': return 'B';
+    case 'B': return 'C';
+    case 'C': return 'D';
+    default: return null;
+  }
+}
+
+// Implement the new instance method on the user schema
+userSchema.methods.getGhostLevelCapabilities = function(this: IUser): PostCapabilities {
+  const userLevel = this.ghostProgression.level;
+  return levelCapabilities[userLevel];
+};
+
+
+
+export default model<IUser>("User", userSchema);

@@ -81,6 +81,7 @@ interface IGhostProgression {
   level: 'A' | 'B' | 'C' | 'D';
   postsMade: number;
   friendsInvited: number;
+  daysActive: number;
   lastLevelUp: Date;
   nextLevelRequirements: {
     postsNeeded: number;
