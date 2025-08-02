@@ -3,6 +3,14 @@
 import { Schema, model, Types } from 'mongoose';
 import { IGroup, IGroupMember } from '../types/group_type';
 
+
+// export interface IGroupMember {
+//   userId: Types.ObjectId;
+//   role: 'owner' | 'admin' | 'moderator' | 'member';
+//   joinedAt: Date;
+// }
+
+
 const GroupMemberSchema = new Schema<IGroupMember>({
   userId: {
     type: Schema.Types.ObjectId,

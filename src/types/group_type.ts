@@ -12,6 +12,7 @@ export interface IGroupMember {
 }
 
 export interface IGroup extends Document {
+  _id: Types.ObjectId;
   name: string;
   description?: string;
   avatarUrl?: string;

@@ -1,17 +1,17 @@
+
+
+
 import express from "express";
+import { postController } from "../controller/post_controller";
 const router = express.Router();
-import { userController } from "../controller/user_controller";
 import tokenValidationMiddleware from "../middlewares/token_validator";
 import { statusChecker } from "../middlewares/status_middleware";
-import { uploadProfile } from "../middlewares/upload";
+import { uploadPostMedia } from "../middlewares/upload";
 
 router.use(tokenValidationMiddleware);
-
-router.post(
-  "/complete-profile",
-  uploadProfile.single("avatar"),
-  userController.completeProfile
-);
 router.use(statusChecker);
+
+
+router.post("/create", uploadPostMedia.array("mediaFiles", 10), postController.createPost);
 
 export default router;

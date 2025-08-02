@@ -237,6 +237,10 @@ const VisibilitySettingsSchema = new Schema<IVisibilitySettings>(
       type: Boolean,
       default: true,
     },
+    showPostTime: {
+      type: Boolean,
+      default: true,
+    },
     allowSharing: {
       type: Boolean,
       default: true,
@@ -536,7 +540,6 @@ PostSchema.index({ "visibility.type": 1, createdAt: -1 }); // Public/private pos
 PostSchema.index({ hashtags: 1, createdAt: -1 }); // Hashtag searches
 PostSchema.index({ "trending.engagementScore": -1, createdAt: -1 }); // Trending posts
 PostSchema.index({ lastEngagementAt: -1 }); // Feed algorithm
-PostSchema.index({ "expiration.expiresAt": 1 }); // TTL for ephemeral posts
 PostSchema.index({ "ghostMode.isGhostPost": 1, createdAt: -1 }); // Ghost posts
 PostSchema.index({ originalPostId: 1 }); // Repost chains
 // Add this new index to your PostSchema
@@ -556,15 +559,9 @@ PostSchema.virtual("comments", {
 
 // Pre-save middleware
 PostSchema.pre("save", function (next) {
-  // Generate ghost number if it's a ghost post and doesn't have one
-  // if (this.ghostMode.isGhostPost && !this.ghostMode.ghostNumber) {
-  //   this.ghostMode.ghostNumber = `ghost_${Math.random()
-  //     .toString(36)
-  //     .substr(2, 9)}`;
-  // }
 
   // Set published date for new posts
-  if (this.isNew && !this.isDraft && !this.publishedAt) {
+  if (!this.isDraft) {
     this.publishedAt = new Date();
   }
 
@@ -715,8 +712,5 @@ PostSchema.index(
 );
 
 // Create the model
-export const Post = mongoose.model<IPost>("Post", PostSchema);
-
-// Export the schema for potential extensions
-export { PostSchema, ReactionSchema };
-// export default mongoose.model("Post", PostSchema);
+const Post = mongoose.model<IPost>("Post", PostSchema);
+export { Post, ReactionSchema };

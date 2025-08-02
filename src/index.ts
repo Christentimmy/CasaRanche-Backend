@@ -7,6 +7,7 @@ import { setupSocket } from "./config/socket";
 
 import authRoutes from "./routes/auth_routes";
 import userRoutes from "./routes/user_routes";
+import postRoutes from "./routes/post_routes";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ connectToDatabase();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/post", postRoutes);
 
 const server = http.createServer(app);
 setupSocket(server);

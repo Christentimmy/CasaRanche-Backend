@@ -1,4 +1,5 @@
 import { Document, Types } from "mongoose";
+import { PostCapabilities } from "../types/post_type";
 
 // Define the interfaces for nested objects first
 interface IVerificationInstitution {
@@ -80,7 +81,6 @@ interface ISocialLink {
 interface IGhostProgression {
   level: "A" | "B" | "C" | "D";
   postsMade: number;
-  
   friendsInvited: number;
   daysActive: number;
   lastLevelUp: Date;
@@ -108,7 +108,8 @@ interface IAiEngagement {
 
 // Main User Document Interface
 export interface IUser extends Document {
-  email?: string; 
+  _id: Types.ObjectId;
+  email?: string;
   password?: string;
   anonymousId: string;
   username?: string;
@@ -130,8 +131,10 @@ export interface IUser extends Document {
   aiEngagement: IAiEngagement;
   metadata: Map<string, any>; // Mongoose.Schema.Types.Mixed becomes 'any' in TypeScript
   role: "user" | "admin";
-  
+
   // Mongoose adds these properties
   createdAt: Date;
   updatedAt: Date;
+
+  getGhostLevelCapabilities: () => PostCapabilities;
 }

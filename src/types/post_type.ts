@@ -6,15 +6,15 @@ export interface IMediaItem {
   url: string;
   thumbnailUrl?: string;
   duration?: number; // For video/audio in seconds
-  size: number; // File size in bytes
+  size?: number; // File size in bytes
   dimensions?: {
     width: number;
     height: number;
   };
   metadata?: {
-    format: string;
-    quality: string;
-    isProcessed: boolean;
+    format?: string | undefined | null;
+    quality?: string | undefined | null;
+    isProcessed?: boolean;
   };
 }
 
@@ -78,6 +78,7 @@ export interface IEngagementStats {
 export interface IVisibilitySettings {
   type: "public" | "followers" | "private" | "ghost" | "confession" | "group";
   allowComments: boolean;
+  showPostTime: boolean;
   allowSharing: boolean;
   allowReposting: boolean;
   hideFromTimeline: boolean;
@@ -191,6 +192,7 @@ export interface IPostFeedItem extends IPost {
 // Main Post Interface
 export interface IPost extends Document {
   // Basic Post Information
+  _id: Types.ObjectId;
   authorId: Types.ObjectId;
   postType: "regular" | "ghost" | "confession" | "repost";
 

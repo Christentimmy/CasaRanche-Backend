@@ -6,6 +6,7 @@ import validator from "validator";
 import { redisController } from "../controller/redis_controller";
 import { sendOTP } from "../services/email_service";
 import tokenBlacklistSchema from "../models/token_blacklist_model";
+import { verifyGoogleToken } from "../utils/google_token";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -16,6 +17,7 @@ if (!process.env.TOKEN_SECRET) {
 const token_secret = process.env.TOKEN_SECRET;
 
 export const authController = {
+  
   signUpUser: async (req: Request, res: Response) => {
     try {
       if (!req.body || typeof req.body !== "object") {
@@ -79,7 +81,6 @@ export const authController = {
         { expiresIn: "2d" }
       );
       await newUser.save();
-      await tokenBlacklistSchema.create({ token, userId: newUser._id });
 
       const otp = Math.floor(1000 + Math.random() * 9000).toString();
       await redisController.saveOtpToStore(email, otp);
@@ -160,6 +161,41 @@ export const authController = {
     }
   },
 
+  googleAuth: async (req: Request, res: Response) => {
+    try {
+      const { token } = req.body; 
+      if (!token) return res.status(400).json({ message: "Token is required" });
+
+      const googleUser = await verifyGoogleToken(token);
+
+      let user = await userSchema.findOne({ email: googleUser.email });
+      if (!user) {
+        // Create new user
+        user = new userSchema({
+          email: googleUser.email,
+          displayName: googleUser.name,
+          avatarUrl: googleUser.picture,
+          role: "user",
+        });
+        await user.save();
+      }
+
+      const jwtToken = jwt.sign(
+        { id: user._id, role: user.role },
+        process.env.TOKEN_SECRET!,
+        { expiresIn: "2d" }
+      );
+
+      res.status(200).json({
+        message: "Login successful",
+        token: jwtToken,
+      });
+    } catch (error) {
+      console.error("Google login error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
+
   logoutUser: async (req: Request, res: Response) => {
     try {
       const token = req.headers.authorization?.split(" ")[1];
@@ -183,7 +219,7 @@ export const authController = {
       console.error("❌ Error in logout:", error);
       res.status(500).json({ message: "Server error" });
     }
-  },  
+  },
 
   sendOtp: async (req: Request, res: Response) => {
     try {

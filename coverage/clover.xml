@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1754155598436" clover="3.2.0">
+  <project timestamp="1754155598436" name="All files">
+    <metrics statements="137" coveredstatements="53" conditionals="91" coveredconditionals="11" methods="27" coveredmethods="2" elements="255" coveredelements="66" complexity="0" loc="137" ncloc="137" packages="3" files="4" classes="4"/>
+    <package name="models">
+      <metrics statements="93" coveredstatements="40" conditionals="41" coveredconditionals="0" methods="20" coveredmethods="0"/>
+      <file name="group_model.ts" path="C:\Users\Akaza\Documents\Works\casarancha-backend\src\models\group_model.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+      </file>
+      <file name="post_model.ts" path="C:\Users\Akaza\Documents\Works\casarancha-backend\src\models\post_model.ts">
+        <metrics statements="89" coveredstatements="36" conditionals="41" coveredconditionals="0" methods="20" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="173" count="1" type="stmt"/>
+        <line num="229" count="1" type="stmt"/>
+        <line num="270" count="1" type="stmt"/>
+        <line num="283" count="1" type="stmt"/>
+        <line num="298" count="1" type="stmt"/>
+        <line num="328" count="1" type="stmt"/>
+        <line num="361" count="1" type="stmt"/>
+        <line num="388" count="0" type="stmt"/>
+        <line num="415" count="0" type="stmt"/>
+        <line num="419" count="0" type="stmt"/>
+        <line num="425" count="0" type="stmt"/>
+        <line num="475" count="0" type="stmt"/>
+        <line num="481" count="0" type="stmt"/>
+        <line num="537" count="1" type="stmt"/>
+        <line num="538" count="1" type="stmt"/>
+        <line num="539" count="1" type="stmt"/>
+        <line num="540" count="1" type="stmt"/>
+        <line num="541" count="1" type="stmt"/>
+        <line num="542" count="1" type="stmt"/>
+        <line num="543" count="1" type="stmt"/>
+        <line num="544" count="1" type="stmt"/>
+        <line num="546" count="1" type="stmt"/>
+        <line num="549" count="1" type="stmt"/>
+        <line num="551" count="0" type="cond" truecount="0" falsecount="10"/>
+        <line num="554" count="1" type="stmt"/>
+        <line num="561" count="1" type="stmt"/>
+        <line num="564" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="565" count="0" type="stmt"/>
+        <line num="569" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="570" count="0" type="stmt"/>
+        <line num="573" count="0" type="stmt"/>
+        <line num="577" count="1" type="stmt"/>
+        <line num="582" count="0" type="stmt"/>
+        <line num="583" count="0" type="stmt"/>
+        <line num="585" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="586" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="587" count="0" type="stmt"/>
+        <line num="588" count="0" type="stmt"/>
+        <line num="591" count="0" type="stmt"/>
+        <line num="599" count="0" type="stmt"/>
+        <line num="600" count="0" type="stmt"/>
+        <line num="603" count="0" type="stmt"/>
+        <line num="605" count="0" type="stmt"/>
+        <line num="608" count="1" type="stmt"/>
+        <line num="612" count="0" type="stmt"/>
+        <line num="613" count="0" type="stmt"/>
+        <line num="615" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="616" count="0" type="stmt"/>
+        <line num="617" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="618" count="0" type="stmt"/>
+        <line num="619" count="0" type="stmt"/>
+        <line num="621" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="622" count="0" type="stmt"/>
+        <line num="623" count="0" type="stmt"/>
+        <line num="629" count="0" type="stmt"/>
+        <line num="630" count="0" type="stmt"/>
+        <line num="634" count="0" type="stmt"/>
+        <line num="637" count="1" type="stmt"/>
+        <line num="638" count="0" type="stmt"/>
+        <line num="640" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="641" count="0" type="stmt"/>
+        <line num="644" count="0" type="stmt"/>
+        <line num="647" count="1" type="stmt"/>
+        <line num="649" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="650" count="0" type="stmt"/>
+        <line num="653" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="655" count="0" type="stmt"/>
+        <line num="659" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="660" count="0" type="stmt"/>
+        <line num="663" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="664" count="0" type="stmt"/>
+        <line num="668" count="0" type="stmt"/>
+        <line num="672" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="673" count="0" type="stmt"/>
+        <line num="683" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="684" count="0" type="stmt"/>
+        <line num="695" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="696" count="0" type="stmt"/>
+        <line num="702" count="0" type="stmt"/>
+        <line num="706" count="1" type="stmt"/>
+        <line num="715" count="1" type="stmt"/>
+        <line num="716" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="30" coveredstatements="12" conditionals="38" coveredconditionals="11" methods="6" coveredmethods="2"/>
+      <file name="post_validation_service.ts" path="C:\Users\Akaza\Documents\Works\casarancha-backend\src\services\post_validation_service.ts">
+        <metrics statements="30" coveredstatements="12" conditionals="38" coveredconditionals="11" methods="6" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="14" count="5" type="stmt"/>
+        <line num="16" count="5" type="cond" truecount="9" falsecount="1"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="22" count="3" type="stmt"/>
+        <line num="26" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="33" count="0" type="cond" truecount="0" falsecount="8"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="35" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="36" count="0" type="stmt"/>
+        <line num="42" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="55" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="61" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="14" coveredstatements="1" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <file name="grant_post_media_permission.ts" path="C:\Users\Akaza\Documents\Works\casarancha-backend\src\utils\grant_post_media_permission.ts">
+        <metrics statements="14" coveredstatements="1" conditionals="12" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="11" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="19" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
