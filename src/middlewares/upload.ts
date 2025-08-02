@@ -38,7 +38,7 @@ const uploadPostMedia = multer({
     fileSize: 20 * 1024 * 1024, 
   },
   storage: postMediaStorage,
-  fileFilter,
+  // fileFilter,
 });
 
 export { uploadProfile, uploadPostMedia };

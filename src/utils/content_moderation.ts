@@ -557,7 +557,7 @@ export const validateMention = async (username: string) => {
     }
 
     result.exists = true;
-    result.userId = user._id as string;
+    result.userId = user._id.toString();
 
     // Check if user allows mentions
     // if (user.privacySettings?.allowMentions === false) {

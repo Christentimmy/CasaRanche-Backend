@@ -41,8 +41,8 @@ export async function statusChecker(req: Request, res: Response, next: NextFunct
         res.locals.userId = userId;
         res.locals.user = user;
 
-        req.userId = userId;
-        req.user = user;
+        // req.userId = userId;
+        // req.user = user;
         next();
     } catch (error) {
         console.error(error);
