@@ -1,14 +1,13 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 import multer from "multer";
 
 const fileFilter = async (
   req: Request,
-  res: Response,
   file: Express.Multer.File,
   cb: multer.FileFilterCallback
 ) => {
   try {
-    const user = res.locals.user;
+    const user = req.user;
     const capabilities = user.getGhostLevelCapabilities();
 
     const isImage = file.mimetype.startsWith("image/");

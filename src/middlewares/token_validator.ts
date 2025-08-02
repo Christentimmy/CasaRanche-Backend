@@ -59,8 +59,8 @@ const tokenValidationMiddleware = async (
     res.locals.userId = decoded.id;
     res.locals.role = decoded.role;
     
-    // req.userId = decoded.id;
-    // req.role = decoded.role;
+    req.userId = decoded.id;
+    req.role = decoded.role;
 
     next();
   } catch (error) {
